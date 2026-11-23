@@ -1,0 +1,632 @@
+?variant="standard" id="73182" title="RANDOM RECIPE LAB - HTML/CSS/JS"}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RANDOM RECIPE LAB</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, "Malgun Gothic", sans-serif;
+    background: #f5f6f8;
+    color: #202124;
+}
+
+header {
+    background: white;
+    padding: 22px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+.logo span {
+    color: #ff8534;
+}
+
+.header-label {
+    font-size: 12px;
+    color: #888;
+    letter-spacing: 2px;
+}
+
+main {
+    max-width: 1050px;
+    margin: 65px auto;
+    padding: 0 22px;
+}
+
+.intro {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.intro h1 {
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 900;
+    margin-bottom: 16px;
+}
+
+.intro h1 span {
+    color: #ff8534;
+}
+
+.intro p {
+    color: #777;
+    line-height: 1.7;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 18px;
+}
+
+.mode-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 35px;
+}
+
+.mode-card {
+    background: white;
+    padding: 28px;
+    border: 2px solid #e8e8e8;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.mode-card:hover {
+    transform: translateY(-4px);
+    border-color: #ff8534;
+}
+
+.mode-card.active {
+    border-color: #ff8534;
+    background: #fff8f2;
+}
+
+.mode-number {
+    color: #ff8534;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.mode-card h3 {
+    margin: 12px 0;
+    font-size: 21px;
+}
+
+.mode-card p {
+    color: #888;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.generate-area {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.generate-btn {
+    background: #ff8534;
+    color: white;
+    border: none;
+    padding: 17px 55px;
+    font-size: 17px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.generate-btn:hover {
+    background: #ed7020;
+    transform: scale(1.03);
+}
+
+.result {
+    display: none;
+    background: white;
+    border-radius: 18px;
+    padding: 35px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.04);
+}
+
+.result.show {
+    display: block;
+    animation: appear 0.4s;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.result-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.result-top h2 {
+    font-size: 24px;
+}
+
+.mode-tag {
+    background: #fff0e5;
+    color: #ed7020;
+    padding: 8px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.recipe-name {
+    text-align: center;
+    padding: 28px 10px;
+    background: #fff8f2;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+.recipe-name small {
+    color: #999;
+}
+
+.recipe-name h2 {
+    font-size: 27px;
+    margin-top: 10px;
+    color: #ed7020;
+}
+
+.items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 13px;
+    margin-bottom: 28px;
+}
+
+.item {
+    background: #f7f7f7;
+    padding: 20px 10px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.item small {
+    color: #999;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.item strong {
+    font-size: 15px;
+    word-break: keep-all;
+}
+
+.guide {
+    background: #f7f7f7;
+    padding: 22px;
+    border-radius: 12px;
+    line-height: 1.9;
+}
+
+.guide h3 {
+    margin-bottom: 10px;
+}
+
+.guide p {
+    font-size: 14px;
+    color: #555;
+}
+
+.again-btn {
+    width: 100%;
+    margin-top: 25px;
+    padding: 15px;
+    background: #202124;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.again-btn:hover {
+    background: #444;
+}
+
+footer {
+    text-align: center;
+    color: #aaa;
+    font-size: 12px;
+    padding: 40px 10px;
+}
+
+@media(max-width:650px) {
+    header {
+        padding: 18px 5%;
+    }
+
+    .header-label {
+        font-size: 9px;
+    }
+
+    .mode-container {
+        grid-template-columns: 1fr;
+    }
+
+    .items {
+        grid-template-columns: 1fr;
+    }
+
+    main {
+        margin-top: 40px;
+    }
+
+    .result {
+        padding: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">RANDOM <span>RECIPE</span> LAB</div>
+    <div class="header-label">CONVENIENCE STORE FOOD LAB</div>
+</header>
+
+<main>
+
+    <section class="intro">
+        <h1>WHAT SHOULD WE <span>EAT?</span></h1>
+        <p>
+            익숙한 조합부터 예상하지 못한 조합까지.<br>
+            무작위 알고리즘으로 새로운 편의점 레시피를 발견하세요.
+        </p>
+    </section>
+
+    <h2 class="section-title">01. GENERATION MODE</h2>
+
+    <section class="mode-container">
+
+        <div class="mode-card active" id="randomMode"
+             onclick="selectMode('random')">
+            <div class="mode-number">MODE 01</div>
+            <h3>완전 무작위 생성</h3>
+            <p>
+                모든 재료를 하나의 데이터 목록으로 통합하고
+                무작위로 선택하여 예상하기 어려운 조합을 생성합니다.
+            </p>
+        </div>
+
+        <div class="mode-card" id="categoryMode"
+             onclick="selectMode('category')">
+            <div class="mode-number">MODE 02</div>
+            <h3>분류 기반 생성</h3>
+            <p>
+                주메뉴, 추가 메뉴, 음료를 각각 분류하고
+                각 분류에서 무작위로 선택하여 조합합니다.
+            </p>
+        </div>
+
+    </section>
+
+    <section class="generate-area">
+        <button class="generate-btn" onclick="generateRecipe()">
+            GENERATE RECIPE
+        </button>
+    </section>
+
+    <section class="result" id="result">
+
+        <div class="result-top">
+            <h2>YOUR NEW RECIPE</h2>
+            <span class="mode-tag" id="modeTag">RANDOM MODE</span>
+        </div>
+
+        <div class="recipe-name">
+            <small>GENERATED RECIPE</small>
+            <h2 id="recipeName">레시피 이름</h2>
+        </div>
+
+        <div class="items" id="items"></div>
+
+        <div class="guide">
+            <h3>HOW TO MAKE</h3>
+            <p id="guideText"></p>
+        </div>
+
+        <button class="again-btn" onclick="generateRecipe()">
+            ↻ 다른 레시피 생성하기
+        </button>
+
+    </section>
+
+</main>
+
+<footer>
+    RANDOM RECIPE LAB · AI VS HUMAN
+</footer>
+
+
+<script>
+
+// 1. 재료 데이터베이스
+
+const foods = {
+
+    "컵라면": [
+        "육개장 사발면", "김치 사발면", "신라면 컵",
+        "신라면 큰사발", "진라면 매운맛 컵", "진라면 순한맛 컵",
+        "열라면 컵", "참깨라면 컵", "삼양라면 컵",
+        "안성탕면 컵", "너구리 컵", "오징어짬뽕 컵",
+        "사리곰탕 컵", "튀김우동 컵", "새우탕 컵",
+        "왕뚜껑", "김치왕뚜껑", "불닭볶음면 컵",
+        "까르보불닭 컵", "로제불닭 컵", "4가지치즈 불닭 컵",
+        "짜파게티 범벅", "사천 짜파게티 컵",
+        "공화춘 짜장", "공화춘 짬뽕", "라면볶이",
+        "치즈볶이", "스파게티 컵", "컵누들 매콤한맛",
+        "컵누들 우동맛", "컵누들 로제맛", "컵누들 매콤찜닭맛"
+    ],
+
+    "도시락": [
+        "편의점 도시락"
+    ],
+
+    "삼각김밥": [
+        "참치마요 삼각김밥", "전주비빔 삼각김밥",
+        "참치김치 삼각김밥", "스팸마요 삼각김밥",
+        "불고기 삼각김밥", "제육볶음 삼각김밥"
+    ],
+
+    "김밥": [
+        "참치김밥", "참치마요김밥", "돈까스김밥",
+        "제육김밥", "불고기김밥", "치즈김밥",
+        "야채김밥", "계란김밥", "묵은지참치김밥"
+    ],
+
+    "샌드위치": [
+        "에그마요 샌드위치", "햄치즈 샌드위치",
+        "BLT 샌드위치", "참치마요 샌드위치",
+        "감자샐러드 샌드위치", "닭가슴살 샌드위치",
+        "치킨 샌드위치"
+    ],
+
+    "음료": [
+        "코카콜라", "펩시콜라", "칠성사이다",
+        "스프라이트", "환타 오렌지", "환타 파인애플",
+        "밀키스", "포카리스웨트", "파워에이드",
+        "토레타", "웰치스 포도", "갈아만든 배",
+        "쥬시쿨", "조지아 오리지널", "TOP 아메리카노",
+        "바리스타룰스 라떼", "바나나우유",
+        "초코우유", "딸기우유", "흰우유",
+        "아이스티", "옥수수수염차", "헛개차",
+        "보리차", "17차"
+    ]
+
+};
+
+
+// 2. 무작위 선택 함수
+
+function randomChoice(array) {
+    return array[Math.floor(Math.random() * array.length)];
+}
+
+
+// 3. 전체 재료 목록 생성
+
+const allFoods = Object.entries(foods)
+    .flatMap(([category, items]) =>
+        items.map(name => ({name, category}))
+    );
+
+
+// 4. 생성 모드 설정
+
+let currentMode = "random";
+
+function selectMode(mode) {
+
+    currentMode = mode;
+
+    document.getElementById("randomMode")
+        .classList.toggle("active", mode === "random");
+
+    document.getElementById("categoryMode")
+        .classList.toggle("active", mode === "category");
+
+}
+
+
+// 5. 완전 무작위 생성
+
+function randomRecipe() {
+
+    let pool = [...allFoods];
+    let result = [];
+
+    // 서로 다른 재료 3개 선택
+    for(let i = 0; i < 3; i++) {
+
+        let index = Math.floor(Math.random() * pool.length);
+
+        result.push(pool.splice(index, 1)[0]);
+
+    }
+
+    return result;
+
+}
+
+
+// 6. 분류 기반 생성
+
+function categoryRecipe() {
+
+    let mainCategories = [
+        "컵라면", "도시락", "삼각김밥",
+        "김밥", "샌드위치"
+    ];
+
+    let mainCategory = randomChoice(mainCategories);
+
+    let main = {
+        name: randomChoice(foods[mainCategory]),
+        category: mainCategory
+    };
+
+    // 주메뉴와 다른 종류의 추가 메뉴 선택
+    let otherCategories = mainCategories.filter(
+        category => category !== mainCategory
+    );
+
+    let subCategory = randomChoice(otherCategories);
+
+    let sub = {
+        name: randomChoice(foods[subCategory]),
+        category: subCategory
+    };
+
+    let drink = {
+        name: randomChoice(foods["음료"]),
+        category: "음료"
+    };
+
+    return [main, sub, drink];
+
+}
+
+
+// 7. 레시피 생성 및 화면 출력
+
+function generateRecipe() {
+
+    let result;
+
+    if(currentMode === "random") {
+        result = randomRecipe();
+    } else {
+        result = categoryRecipe();
+    }
+
+    document.getElementById("modeTag").textContent =
+        currentMode === "random"
+        ? "RANDOM MODE"
+        : "CATEGORY MODE";
+
+    document.getElementById("recipeName").textContent =
+        result.map(item => item.name).join(" + ");
+
+    let itemsHTML = "";
+
+    result.forEach((item, index) => {
+
+        let label;
+
+        if(currentMode === "random") {
+            label = item.category;
+        } else {
+            label = ["주메뉴", "추가 메뉴", "음료"][index];
+        }
+
+        itemsHTML += `
+            <div class="item">
+                <small>${label}</small>
+                <strong>${item.name}</strong>
+            </div>
+        `;
+
+    });
+
+    document.getElementById("items").innerHTML = itemsHTML;
+
+    document.getElementById("guideText").innerHTML =
+        makeGuide(result);
+
+    document.getElementById("result").classList.add("show");
+
+    document.getElementById("result").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
+
+
+// 8. 조합 안내 생성
+
+function makeGuide(result) {
+
+    let names = result.map(item => item.name);
+
+    let hasNoodle = result.some(
+        item => item.category === "컵라면"
+    );
+
+    let hasSandwich = result.some(
+        item => item.category === "샌드위치"
+    );
+
+    let guide = `
+        1. 생성된 재료 ${names.length}가지를 준비합니다.<br>
+        2. 각 식품의 포장지에 표시된 조리 및 섭취 방법을 확인합니다.<br>
+    `;
+
+    if(hasNoodle) {
+        guide += `
+        3. 컵라면은 제품 안내에 따라 조리합니다.
+        `;
+    } else if(hasSandwich) {
+        guide += `
+        3. 샌드위치는 제품 안내에 따라 준비합니다.
+        `;
+    } else {
+        guide += `
+        3. 준비한 식품을 조합하거나 함께 배치합니다.
+        `;
+    }
+
+    guide += `
+        <br>4. 완성된 조합을 맛보고 평가해 보세요.
+    `;
+
+    return guide;
+
+}
+
+</script>
+
+</body>
+</html>
